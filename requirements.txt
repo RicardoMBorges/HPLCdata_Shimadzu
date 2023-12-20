@@ -8,3 +8,4 @@ Pillow
 matplotlib
 jupyter-server
 scikit-learn
+tensorly
