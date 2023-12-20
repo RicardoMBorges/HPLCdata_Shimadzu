@@ -1,0 +1,10 @@
+wheel
+numpy
+pandas
+seaborn
+plotly
+kaleido
+Pillow
+matplotlib
+jupyter-server
+scikit-learn
