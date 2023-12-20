@@ -392,7 +392,7 @@ def STOCSY_LCDAD(target,X,ppm):
     fig.colorbar(line, ax=axs)
     axs.set_xlim(x.min(), x.max())
     axs.set_ylim(y.min(), y.max())
-    axs.invert_xaxis()
+    #axs.invert_xaxis()
         
     #This sets the ticks to ppm values
     minppm = min(ppm)
@@ -449,6 +449,6 @@ def STOCSY_LCDAD(target,X,ppm):
         os.mkdir('images')
     plt.savefig(f"images/stocsy_from_{target}.pdf", transparent=True, dpi=300)
     
-    return corr, covar
+    return corr, covar, fig
 
 
