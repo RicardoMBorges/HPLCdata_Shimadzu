@@ -244,7 +244,7 @@ def combine_data2(input_folder, output_folder):
     return combined_df
 
 ### REMOVE UNWANTED REGIONS
-def remove_unwanted_regions(df, start_value, end_value):
+def remove_unwanted_regions(df, start_value, end_value, axis):
     """
     Remove unwanted regions by substituting sample values with zeros between specified 
     start and end values in the RT(min) axis.
@@ -263,16 +263,43 @@ def remove_unwanted_regions(df, start_value, end_value):
     modified_df = remove_unwanted_regions(combined_df.copy(), start, end)
     """
     # Identify the rows where RT(min) is within the specified range
-    rows_to_substitute = df['RT(min)'].between(start_value, end_value)
+    rows_to_substitute = df.iloc[:, 0].between(start_value, end_value)
 
-    # Columns to be modified (excluding RT(min))
-    sample_columns = [col for col in df.columns if col != 'RT(min)']
+    # Columns to be modified (all except the first column)
+    sample_columns = df.columns[1:]
 
     # Substitute values with zeros in the specified range for all sample columns
     df.loc[rows_to_substitute, sample_columns] = 0
 
+
     return df
 ##
+
+def keep_region(df, start_value, end_value, axis_column):
+    """
+    Keep only the specified region in the DataFrame by filtering rows within the specified range
+    in the axis column (e.g., Chemical Shift in ppm).
+
+    Parameters:
+    df (pd.DataFrame): DataFrame containing the data.
+    start_value (float/int): Starting value of the range to keep.
+    end_value (float/int): Ending value of the range to keep.
+    axis_column (str): Name of the axis column (e.g., 'Chemical Shift (ppm)').
+
+    Returns:
+    pd.DataFrame: Filtered DataFrame containing only the specified region.
+    
+    # Example usage
+    start = 0    # Starting value for the region to keep
+    end = 10     # Ending value for the region to keep
+    filtered_df = keep_region(df.copy(), start, end, 'Chemical Shift (ppm)')
+    """
+    # Filter rows to keep only those within the specified range in the axis column
+    filtered_df = df[(df[axis_column] >= start_value) & (df[axis_column] <= end_value)].copy()
+    
+    return filtered_df
+
+
 
 
 ### ALIGNMENT FUNCTIONS
