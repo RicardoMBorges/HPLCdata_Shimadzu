@@ -9,3 +9,6 @@ matplotlib
 jupyter-server
 scikit-learn
 tensorly
+pyicoshift
+chardet
+mpld3
